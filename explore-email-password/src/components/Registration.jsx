@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link } from "react-router";
 
 const Registration = () => {
   const [success, setSuccess] = useState(false);
@@ -18,7 +22,6 @@ const Registration = () => {
     setErrorText("");
     setSuccess(false);
 
- 
     if (!condition) {
       setErrorText("Please accept our condition");
       return;
@@ -38,7 +41,12 @@ const Registration = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
         console.log(result);
-        setSuccess(true);
+
+        //verify email
+        sendEmailVerification(auth.currentUser).then(() => {
+          setSuccess(true);
+          alert("We sent a verify email");
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -100,6 +108,12 @@ const Registration = () => {
               />
               Remember me
             </label>
+            <p>
+              Already have an account{" "}
+              <Link className="text-blue-400 underline" to={"/login"}>
+                Login
+              </Link>
+            </p>
             {errorText && (
               <p className="mt-4 text-red-500 text-center">{errorText}</p>
             )}
