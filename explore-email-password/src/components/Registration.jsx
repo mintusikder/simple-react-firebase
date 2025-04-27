@@ -12,11 +12,17 @@ const Registration = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const condition = e.target.condition.checked;
     console.log(email, password);
 
     setErrorText("");
     setSuccess(false);
 
+ 
+    if (!condition) {
+      setErrorText("Please accept our condition");
+      return;
+    }
     // Password validation
     const upperCasePattern = /[A-Z]/;
     if (!upperCasePattern.test(password)) {
@@ -46,8 +52,9 @@ const Registration = () => {
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Register now!</h1>
           <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. 
-            In deleniti eaque aut repudiandae et a id nisi.
+            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
+            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
+            a id nisi.
           </p>
         </div>
 
@@ -85,7 +92,14 @@ const Registration = () => {
                 Register
               </button>
             </fieldset>
-
+            <label className="label">
+              <input
+                type="checkbox"
+                name="condition"
+                className="checkbox checkbox-sm"
+              />
+              Remember me
+            </label>
             {errorText && (
               <p className="mt-4 text-red-500 text-center">{errorText}</p>
             )}
