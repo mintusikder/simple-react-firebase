@@ -1,69 +1,99 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Registration = () => {
   const [success, setSuccess] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const handelRegister = (e) => {
+  const [show, setShow] = useState(false);
+
+  const handleRegister = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
-    setErrorText(false);
-    setSuccess("");
 
-    //password validation
-    const passEx = /[A-Z]/;
-    if (!passEx.test(password)) {
-      setErrorText("Need a upprcase");
+    setErrorText("");
+    setSuccess(false);
+
+    // Password validation
+    const upperCasePattern = /[A-Z]/;
+    if (!upperCasePattern.test(password)) {
+      setErrorText("Password must contain at least one uppercase letter.");
+      return;
+    }
+    if (password.length < 6) {
+      setErrorText("Password must be at least 6 characters long.");
       return;
     }
 
-    //create user
+    // Create user
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
         console.log(result);
         setSuccess(true);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         setErrorText(error.message);
       });
   };
+
   return (
-    <form onSubmit={handelRegister} className="hero bg-base-200 min-h-screen">
+    <form onSubmit={handleRegister} className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Register now!</h1>
           <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. 
+            In deleniti eaque aut repudiandae et a id nisi.
           </p>
         </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+
+        <div className="card w-full max-w-sm shrink-0 bg-base-100 shadow-2xl">
           <div className="card-body">
             <fieldset className="fieldset">
               <label className="label">Email</label>
               <input
                 type="email"
                 name="email"
-                className="input"
-                placeholder="Email"
-              />
-              <label className="label">Password</label>
-              <input
-                type="password"
-                name="password"
-                className="input"
-                placeholder="Password"
+                className="input input-bordered w-full"
+                placeholder="Enter your email"
+                required
               />
 
-              <button className="btn btn-neutral mt-4">Register</button>
+              <label className="label mt-4">Password</label>
+              <div className="relative">
+                <input
+                  type={show ? "text" : "password"}
+                  name="password"
+                  className="input input-bordered w-full"
+                  placeholder="Enter your password"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShow(!show)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xl"
+                >
+                  {show ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
+
+              <button type="submit" className="btn btn-neutral mt-6 w-full">
+                Register
+              </button>
             </fieldset>
-            {errorText && <p className="bg-red-500">{errorText}</p>}
-            {success && <p className="bg-green-500">User create success</p>}
+
+            {errorText && (
+              <p className="mt-4 text-red-500 text-center">{errorText}</p>
+            )}
+            {success && (
+              <p className="mt-4 text-green-500 text-center">
+                User created successfully!
+              </p>
+            )}
           </div>
         </div>
       </div>
