@@ -1,11 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/firebase.config";
 
 const Registration = () => {
+  const [success, setSuccess] = useState(false);
+  const [errorText, setErrorText] = useState("");
   const handelRegister = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
+    setErrorText(false);
+    setSuccess("");
+
+    //password validation
+    const passEx = /[A-Z]/;
+    if (!passEx.test(password)) {
+      setErrorText("Need a upprcase");
+      return;
+    }
+
+    //create user
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((result) => {
+        console.log(result);
+        setSuccess(true);
+      })
+      .catch((error) => {
+        console.log(error);
+        setErrorText(error.message);
+      });
   };
   return (
     <form onSubmit={handelRegister} className="hero bg-base-200 min-h-screen">
@@ -38,6 +62,8 @@ const Registration = () => {
 
               <button className="btn btn-neutral mt-4">Register</button>
             </fieldset>
+            {errorText && <p className="bg-red-500">{errorText}</p>}
+            {success && <p className="bg-green-500">User create success</p>}
           </div>
         </div>
       </div>
