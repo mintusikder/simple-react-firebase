@@ -1,7 +1,18 @@
-import React from "react";
-import { NavLink } from "react-router";
+import React, { use } from "react";
+import { Link, NavLink } from "react-router";
+import { AuthContext } from "../context/AuthContext";
 
 const Header = () => {
+  const { user, logOut } = use(AuthContext);
+  console.log("user111 ", user);
+
+  const handelSignOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const nav = (
     <>
       <li>
@@ -13,6 +24,11 @@ const Header = () => {
       <li>
         <NavLink to={"/register"}>Register</NavLink>
       </li>
+      {user && (
+        <li>
+          <NavLink to={"/order"}>Order</NavLink>
+        </li>
+      )}
     </>
   );
   return (
@@ -49,7 +65,16 @@ const Header = () => {
         <ul className="menu menu-horizontal px-1">{nav}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        {user ? (
+          <>
+            <span>{user.email}</span>
+            <a onClick={handelSignOut} className="btn">
+              Sign Out
+            </a>
+          </>
+        ) : (
+          <Link to={"/login"}>Login</Link>
+        )}
       </div>
     </div>
   );
