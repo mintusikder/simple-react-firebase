@@ -3,14 +3,14 @@ import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
-  const { signUser,user } = use(AuthContext);
+  const { signUser } = use(AuthContext);
   const handelLogin = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
-    signUser(email,password)
+    signUser(email, password)
       .then((result) => {
         console.log(result.user);
       })
