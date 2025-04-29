@@ -1,9 +1,12 @@
-import React, { use } from "react";
-import { Link } from "react-router";
+import React, { use, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
   const { signUser } = use(AuthContext);
+  const [show, setShow] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
   const handelLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -13,6 +16,8 @@ const Login = () => {
     signUser(email, password)
       .then((result) => {
         console.log(result.user);
+        const form = location.state?.form?.pathname || "/";
+        navigate(form, { replace: true });
       })
       .catch((error) => {
         console.log(error);
@@ -40,12 +45,21 @@ const Login = () => {
                 placeholder="Email"
               />
               <label className="label">Password</label>
-              <input
-                type="password"
-                name="password"
-                className="input"
-                placeholder="Password"
-              />
+              <div className="relative">
+                <input
+                  type={show ? "text" : "password"}
+                  name="password"
+                  className="input"
+                  placeholder="Password"
+                />
+                <button
+                type="button"
+                  onClick={() => setShow(!show)}
+                  className="btn btn-xs text-sm absolute right-6 top-1/2 -translate-y-1/2"
+                >
+                  {show ? "Show" : "Hide"}
+                </button>
+              </div>
               <div>
                 <a className="link link-hover">Forgot password?</a>
               </div>
