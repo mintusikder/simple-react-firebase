@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router";
 import Header from "../components/Header";
 import LatestNews from "../components/LatestNews";
+import NavBar from "../components/NavBar";
 
 const Main = () => {
   return (
@@ -9,6 +10,7 @@ const Main = () => {
       <Header></Header>
       <section className="w-11/12 mx-auto">
         <LatestNews></LatestNews>
+        <NavBar></NavBar>
       </section>
       <main>
         {/* left */}
