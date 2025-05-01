@@ -1,5 +1,6 @@
 import React from "react";
 import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 const SocalLogin = () => {
   return (
@@ -7,7 +8,8 @@ const SocalLogin = () => {
       <h2 className="font-bold mb-5">Login With</h2>
       <div className="flex flex-col gap-3">
         <button className="btn btn-outline">
-          <FaFacebook size={24} /> Login with Google
+        <FcGoogle size={24} />
+        Login with Google
         </button>
         <button className="btn btn-outline">
           {" "}

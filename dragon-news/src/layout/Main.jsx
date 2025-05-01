@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router";
+import { Outlet } from "react-router"; // ✅ Make sure this is from react-router-dom
 import Header from "../components/Header";
 import LatestNews from "../components/LatestNews";
 import NavBar from "../components/NavBar";
@@ -9,22 +9,27 @@ import RightAside from "../components/RightAside";
 const Main = () => {
   return (
     <div>
-      <Header></Header>
+      <Header />
       <section className="w-11/12 mx-auto">
-        <LatestNews></LatestNews>
-        <NavBar></NavBar>
+        <LatestNews />
+        <NavBar />
       </section>
-      <main className="w-11/12 mx-auto grid grid-cols-12">
-        {/* left */}
-        <aside className="col-span-3">
-          <LeftAside></LeftAside>
+
+      {/* Responsive Grid */}
+      <main className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-12 gap-4">
+        {/* Left Aside (hidden or stacked on mobile) */}
+        <aside className="md:col-span-3">
+          <LeftAside />
         </aside>
-        <section className="col-span-6">
-          <Outlet></Outlet>
+
+        {/* Main Content */}
+        <section className="md:col-span-6">
+          <Outlet />
         </section>
-        {/* right */}
-        <aside className="col-span-3">
-          <RightAside></RightAside>
+
+        {/* Right Aside */}
+        <aside className="md:col-span-3">
+          <RightAside />
         </aside>
       </main>
     </div>
