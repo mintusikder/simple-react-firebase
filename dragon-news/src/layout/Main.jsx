@@ -16,9 +16,9 @@ const Main = () => {
       </section>
 
       {/* Responsive Grid */}
-      <main className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-12 gap-4">
+      <main className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-12 gap-8">
         {/* Left Aside (hidden or stacked on mobile) */}
-        <aside className="md:col-span-3">
+        <aside className="md:col-span-3 sticky top-0 h-fit">
           <LeftAside />
         </aside>
 

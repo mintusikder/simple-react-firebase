@@ -1,12 +1,12 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 
 const NavBar = () => {
   const navLinkStyles = ({ isActive }) =>
     `px-2 transition-all duration-300 ease-in-out 
      hover:underline hover:decoration-red-500 hover:underline-offset-4  ${
-      isActive ? "font-bold text-red-500 underline underline-offset-4" : ""
-    }`;
+       isActive ? "font-bold text-red-500 underline underline-offset-4" : ""
+     }`;
 
   return (
     <div className="navbar bg-base-100">
@@ -31,7 +31,9 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn btn-primary">Login</a>
+        <Link to={"/auth/login"} className="btn btn-primary">
+          Login
+        </Link>
       </div>
     </div>
   );
