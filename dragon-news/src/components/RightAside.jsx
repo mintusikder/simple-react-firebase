@@ -1,9 +1,10 @@
 import React from 'react';
+import SocalLogin from './HomeLayout/SocalLogin';
 
 const RightAside = () => {
     return (
         <div>
-            cd
+           <SocalLogin></SocalLogin>
         </div>
     );
 };
