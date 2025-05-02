@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router"; // ✅ Make sure this is from react-router-dom
+import { Outlet, useNavigation } from "react-router"; // ✅ Make sure this is from react-router-dom
 import Header from "../components/Header";
 import LatestNews from "../components/LatestNews";
 import NavBar from "../components/NavBar";
@@ -7,6 +7,7 @@ import LeftAside from "../components/LeftAside";
 import RightAside from "../components/RightAside";
 
 const Main = () => {
+  const { state } = useNavigation();
   return (
     <div>
       <Header />
@@ -24,7 +25,7 @@ const Main = () => {
 
         {/* Main Content */}
         <section className="md:col-span-6">
-          <Outlet />
+          {state == "loading" ? <p>loading...</p> : <Outlet />}
         </section>
 
         {/* Right Aside */}
