@@ -1,7 +1,22 @@
-import React from "react";
+import React, { use } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../provider/AuthProvider";
 
 const Register = () => {
+  const { createUser } = use(AuthContext);
+  const handelRegister = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(email, password);
+    createUser(email, password)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="py-18">
       <div className="card bg-base-100 w-full mx-auto py-8 max-w-sm shrink-0 shadow-2xl">
@@ -9,7 +24,7 @@ const Register = () => {
           Register Your Account
         </h2>
         <div className="card-body">
-          <form className="fieldset">
+          <form onSubmit={handelRegister} className="fieldset">
             <label className="label">Your Name</label>
             <input
               type="text"
