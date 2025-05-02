@@ -1,13 +1,28 @@
-import React from "react";
+import React, { use } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../provider/AuthProvider";
 
 const Login = () => {
+  const { loginUser } = use(AuthContext);
+  const loginUserl = (e) => {
+    e.preventDefault()
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    loginUser(email, password)
+      .then((result) => {
+        const user = result.user
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="py-18">
       <div className="card bg-base-100 w-full mx-auto py-8 max-w-sm shrink-0 shadow-2xl">
         <h2 className="font-bold text-2xl text-center">Login Your Account</h2>
         <div className="card-body">
-          <form className="fieldset">
+          <form onSubmit={loginUserl} className="fieldset">
             <label className="label">Email</label>
             <input
               type="email"

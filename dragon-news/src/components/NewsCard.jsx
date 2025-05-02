@@ -1,5 +1,6 @@
 import { FaStar, FaEye } from "react-icons/fa";
 import { format } from "date-fns";
+import { Link } from "react-router";
 
 const NewsCard = ({ news }) => {
   const {
@@ -11,6 +12,7 @@ const NewsCard = ({ news }) => {
     rating,
     tags,
     others,
+    id
   } = news;
 
   return (
@@ -44,7 +46,10 @@ const NewsCard = ({ news }) => {
           </div>
         </div>
 
-        <p className="mt-4 text-gray-700">{details.slice(0, 150)}...</p>
+        <p className="mt-4 text-gray-700">
+          {details.slice(0, 150)}...
+          <Link to={`/news-details/${id}`} className="font-bold">Read More</Link>
+        </p>
 
         <div className="flex flex-wrap gap-2 mt-4">
           {tags.map((tag, index) => (

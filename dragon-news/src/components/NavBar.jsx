@@ -1,7 +1,17 @@
-import React from "react";
+import React, { use } from "react";
 import { Link, NavLink } from "react-router";
+import { AuthContext } from "../provider/AuthProvider";
 
 const NavBar = () => {
+  const { user, logOut } = use(AuthContext);
+  const handelLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const navLinkStyles = ({ isActive }) =>
     `px-2 transition-all duration-300 ease-in-out 
      hover:underline hover:decoration-red-500 hover:underline-offset-4  ${
@@ -31,9 +41,15 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to={"/auth/login"} className="btn btn-primary">
-          Login
-        </Link>
+        {user ? (
+          <button onClick={handelLogOut} className="btn btn-primary">
+            LogOut
+          </button>
+        ) : (
+          <Link to={"/auth/login"} className="btn btn-primary">
+            Login
+          </Link>
+        )}
       </div>
     </div>
   );
