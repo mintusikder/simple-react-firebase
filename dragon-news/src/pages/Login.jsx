@@ -1,9 +1,10 @@
 import React, { use } from "react";
-import { Link } from "react-router";
+import { Link} from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Login = () => {
   const { loginUser } = use(AuthContext);
+
   const loginUserl = (e) => {
     e.preventDefault()
     const email = e.target.email.value;
@@ -12,6 +13,7 @@ const Login = () => {
       .then((result) => {
         const user = result.user
         console.log(user);
+
       })
       .catch((error) => {
         console.log(error);

@@ -42,9 +42,12 @@ const NavBar = () => {
       </div>
       <div className="navbar-end">
         {user ? (
+        <>
+        {user.email}
           <button onClick={handelLogOut} className="btn btn-primary">
             LogOut
           </button>
+        </>
         ) : (
           <Link to={"/auth/login"} className="btn btn-primary">
             Login
