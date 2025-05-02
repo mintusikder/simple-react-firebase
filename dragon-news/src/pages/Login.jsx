@@ -1,8 +1,9 @@
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import { Link} from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Login = () => {
+  const [error ,setError] = useState("")
   const { loginUser } = use(AuthContext);
 
   const loginUserl = (e) => {
@@ -15,8 +16,9 @@ const Login = () => {
         console.log(user);
 
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.error("Login failed:", err.message);
+        setError(err.message); // set error message string
       });
   };
   return (
@@ -44,6 +46,7 @@ const Login = () => {
             </div>
             <button className="btn btn-neutral mt-4">Login</button>
           </form>
+          <p className="text-red-500">{error}</p>
           <p className="mt-4 text-sm text-center">
             Not a member yet? {""}
             <Link className="underline text-blue-500" to="/auth/register">
